@@ -55,4 +55,5 @@ wcwidth==0.6.0
 websockets==16.0
 dj-database-url==2.1.0
 psycopg2-binary==2.9.9
+faker==40.11.0
 

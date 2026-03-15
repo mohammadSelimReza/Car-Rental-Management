@@ -27,13 +27,13 @@ services:
       - POSTGRES_USER=${DB_USER:-car_rental_user}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-your_secure_db_password}
       - POSTGRES_DB=${DB_NAME:-car_rental_db}
-    ports:
-      - "5432:5432"
+#    ports:
+#      - "5432:5432"
 
   redis:
     image: redis:7-alpine
-    ports:
-      - "6379:6379"
+#    ports:
+#      - "6379:6379"
 
   celery:
     build: .
