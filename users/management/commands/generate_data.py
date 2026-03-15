@@ -43,7 +43,7 @@ class Command(BaseCommand):
             AgencyAgent.objects.all().delete()
             AgencyAdmin.objects.all().delete()
             Agency.objects.all().delete()
-            User.objects.filter(role__in=['agency_admin', 'agency_agent', 'customer']).delete()
+            User.objects.filter(role__in=['super_admin', 'agency_admin', 'agency_agent', 'customer']).delete()
 
             # 1. Platform Settings & Rules
             PlatformSettings.get_settings()
@@ -74,9 +74,9 @@ class Command(BaseCommand):
 
             # 3. Create Users
             # Super Admin
-            if not User.objects.filter(username='superadmin').exists():
+            if not User.objects.filter(email='superadmin@example.com').exists():
                 User.objects.create_superuser(
-                    username='superadmin', email='superadmin@example.com',
+                    username='superadmin@example.com', email='superadmin@example.com',
                     password=PASSWORD, role='super_admin'
                 )
 
@@ -84,9 +84,10 @@ class Command(BaseCommand):
             agency_admins = []
             for agency in agencies:
                 for i in range(2):
+                    email = fake.email()[:254]
                     user = User.objects.create_user(
-                        username=f"admin_{agency.id}_{i}",
-                        email=fake.email()[:254],
+                        username=email,
+                        email=email,
                         password=PASSWORD,
                         role='agency_admin'
                     )
@@ -100,9 +101,10 @@ class Command(BaseCommand):
             agency_agents = []
             for agency in agencies:
                 for i in range(5):
+                    email = fake.email()[:254]
                     user = User.objects.create_user(
-                        username=f"agent_{agency.id}_{i}",
-                        email=fake.email()[:254],
+                        username=email,
+                        email=email,
                         password=PASSWORD,
                         role='agency_agent'
                     )
@@ -115,9 +117,10 @@ class Command(BaseCommand):
             # Customers (200)
             customers = []
             for i in range(200):
+                email = fake.email()[:254]
                 user = User.objects.create_user(
-                    username=f"customer_{i}",
-                    email=fake.email()[:254],
+                    username=email,
+                    email=email,
                     password=PASSWORD,
                     role='customer'
                 )
